@@ -1,4 +1,4 @@
-export const HTTPS = 'https;://'
+export const HTTPS = 'https://'
 export const HTTP = 'http://';
 
 export const SWAPI_ROOT = 'swapi.dev/api/';
