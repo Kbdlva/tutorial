@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import PropTypes from 'prop-types';
 
 import { API_PERSON } from '@constants/api';
@@ -9,15 +9,16 @@ import { getPeopleImage } from '@services/getPeopleData';
 import PersonPhoto from '@components/PersonPage/PersonPhoto';
 import PersonInfo from '@components/PersonPage/PersonInfo';
 import PersonLinkBack from '@components/PersonPage/PersonLinkBack';
-import PersonFilms from '@components/PersonPage/PersonFilms';
-
-
+import UiLoading from '@ui/UiLoading';
 
 import { withErrorApi } from '@hoc-helpers/withErrorApi';
-
-
-
 import styles from './PersonPage.module.css';
+
+
+const PersonFilms = React.lazy(() => import('@components/PersonPage/PersonFilms'));
+
+
+
 
 const PersonPage = ({ setErrorApi }) => {
   const [personId, setPersonId] = useState(null);
@@ -63,6 +64,7 @@ const PersonPage = ({ setErrorApi }) => {
 
   return (
     <>
+  
       <PersonLinkBack />
 
       <div className={styles.wrapper}>
@@ -75,8 +77,12 @@ const PersonPage = ({ setErrorApi }) => {
           />
 
           {personInfo && <PersonInfo personInfo={personInfo} />}
-          
-          {personFilms &&  <PersonFilms personFilms={personFilms} />}
+
+          {personFilms && (
+            <Suspense fallback={<UiLoading/>}>
+              <PersonFilms personFilms={personFilms} />
+            </Suspense>
+          )}
 
 
         </div>
