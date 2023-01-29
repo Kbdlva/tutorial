@@ -1,31 +1,30 @@
 import { useState, useEffect } from 'react';
-import { getApiResource } from '../../utils/network';
+import PropTypes from 'prop-types';
+
+import { withErrorApi } from '@hoc-helpers/withErrorApi';
+import PeopleList from '@components/PeoplePage/PeopleList';
+import PeopleNavigation from '@components/PeoplePage/PeopleNavigation';
+import { getApiResource, changeHTTP } from '@utils/network';
+import { getPeopleId, getPeopleImage, getPeoplePageId } from '@services/getPeopleData';
+import { API_PEOPLE } from '@constants/api';
+import { useQueryParams } from '@hooks/useQueryParams';
+
 import styles from './PeoplePage.module.css';
-import { API_PEOPLE } from '../../constants/api';
-import { getPeopleId } from '../../services/getPeopleData';
 
-const PeoplePage = () => {
+
+
+const PeoplePage = ({ setErrorApi }) => {
   const [people, setPeople] = useState(null);
+  const [prevPage, setPrevPage] = useState(null);
+  const [nextPage, setNextPage] = useState(null);
+  const [counterPage, setCounterPage] = useState(1);
 
-  // const getResource = async (url) => {
-  //   const res = await getApiResource(url);
 
-  //   const peopleList = res.results.map(({ name, url }) => { // array
-  //     console.log(id);
-  //     return {
-  //       name, // or name: name  --> key: value
-  //       url   //    url: url 
-  //     }
-  //   })
 
-  //   console.log(peopleList)
+  const query = useQueryParams();
+  const queryPage = query.get('page');
 
-  //   setPeople(peopleList);
-  // }
-
-  // useEffect(() => {
-  //   getResource(API_PEOPLE);
-  // }, []);
+  // console.log( prevPage, nextPage);
 
   const getResponse = async (url) => {
     const res = await getApiResource(url);
@@ -33,38 +32,48 @@ const PeoplePage = () => {
     if (res) {
       const peopleList = res.results.map(({ name, url }) => {
         const id = getPeopleId(url);
+        const img = getPeopleImage(id);
 
         return {
           id,
           name,
-          url
+          img
         }
       });
-      console.log(peopleList)
 
       setPeople(peopleList);
+      setPrevPage(changeHTTP(res.previous))
+      setNextPage(changeHTTP(res.next))
+      setCounterPage(getPeoplePageId(url))
+      setErrorApi(false);
     }
-
+    else {
+      setErrorApi(true);
+    }
   };
 
   useEffect(() => {
-    getResponse(API_PEOPLE);
+    getResponse(API_PEOPLE + queryPage);
+
   }, []);
-
-
 
   return (
     <>
-      {people && ( // if there are people to return // we need this line because by default we set it ass null
-        <ul>
-          {people.map(({ name, url }) =>
-            <li key={name}>{name}</li> // key is omething like id for each element
-          )}
-        </ul>
-      )}
-
+      <PeopleNavigation
+        getResponse={getResponse}
+        prevPage={prevPage}
+        nextPage={nextPage}
+        counterPage={counterPage}
+      />
+      {people && <PeopleList people={people} />}
     </>
   )
 }
 
-export default PeoplePage; 
+
+PeoplePage.propTypes = {
+    setErrorApi: PropTypes.func
+  }
+
+
+export default withErrorApi(PeoplePage); 
