@@ -5,39 +5,88 @@ import PropTypes from 'prop-types';
 
 import { API_PERSON } from '@constants/api';
 import { getApiResource } from '@utils/network';
+import { getPeopleImage } from '@services/getPeopleData';
+import PersonPhoto from '@components/PersonPage/PersonPhoto';
+import PersonInfo from '@components/PersonPage/PersonInfo';
+import PersonLinkBack from '@components/PersonPage/PersonLinkBack';
+import PersonFilms from '@components/PersonPage/PersonFilms';
+
+
+
 import { withErrorApi } from '@hoc-helpers/withErrorApi';
+
 
 
 import styles from './PersonPage.module.css';
 
-const PersonPage = ({setErrorApi}) => {
-    const [personId, setPersonId] = useState(null);
-    const { id } = useParams();
-    
-    useEffect(() => {
-        (async () => {
-            setPersonId(id);
+const PersonPage = ({ setErrorApi }) => {
+  const [personId, setPersonId] = useState(null);
+  const [personInfo, setPersonInfo] = useState(null);
+  const [personName, setPersonName] = useState(null);
+  const [personPhoto, setPersonPhoto] = useState(null);
+  const [personFilms, setPersonFilms] = useState(null);
 
-            const res = await getApiResource(`${API_PERSON}/${id}/`);
-            
-            if(res) {
-                setErrorApi(false);
-            } else {
-                setErrorApi(true);
-            }
 
-        })();
-    }, []);
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    (async () => {
+      setPersonId(id);
+
+      const res = await getApiResource(`${API_PERSON}/${id}/`);
+
+      if (res) {
+        setPersonInfo([
+          { title: 'Height', data: res.height },
+          { title: 'Mass', data: res.mass },
+          { title: 'Hair Color', data: res.hair_color },
+          { title: 'Skin Color', data: res.skin_color },
+          { title: 'Eye Color', data: res.eye_color },
+          { title: 'Birth Year', data: res.birth_year },
+          { title: 'Gender', data: res.gender },
+
+        ]);
+
+        setPersonName(res.name);
+        setPersonPhoto(getPeopleImage(id));
+
+        res.films.length && setPersonFilms(res.films)
+
+        setErrorApi(false);
+      } else {
+        setErrorApi(true);
+      }
+
+    })();
+  }, []);
 
   return (
+    <>
+      <PersonLinkBack />
 
-    <h2>{id}</h2>
+      <div className={styles.wrapper}>
+        <span className={styles.person__name}>{personName}</span>
+        <div className={styles.container}>
+
+          <PersonPhoto
+            personPhoto={personPhoto}
+            personName={personName}
+          />
+
+          {personInfo && <PersonInfo personInfo={personInfo} />}
+          
+          {personFilms &&  <PersonFilms personFilms={personFilms} />}
+
+
+        </div>
+      </div>
+    </>
   )
 }
 
 PersonPage.propTypes = {
-    setErrorApi: PropTypes.func,
-
-  }
+  setErrorApi: PropTypes.func,
+}
 
 export default withErrorApi(PersonPage)

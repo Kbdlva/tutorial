@@ -12,14 +12,11 @@ import { useQueryParams } from '@hooks/useQueryParams';
 import styles from './PeoplePage.module.css';
 
 
-
 const PeoplePage = ({ setErrorApi }) => {
   const [people, setPeople] = useState(null);
   const [prevPage, setPrevPage] = useState(null);
   const [nextPage, setNextPage] = useState(null);
   const [counterPage, setCounterPage] = useState(1);
-
-
 
   const query = useQueryParams();
   const queryPage = query.get('page');
