@@ -5,9 +5,9 @@
 
 .person__name {
     padding: var(--spacing-small);
-    border-radius: var(--border-radius-small)
-        var(--border-radius-small)
-        var(--border-radius-small)
+    border-radius: var(--border-radius-medium)
+        var(--border-radius-medium)
+        var(--border-radius-medium)
         0;
     font-size: var(--font-size-subheader);
     font-weight: var(--font-bold);

@@ -65,7 +65,7 @@ const PersonPage = ({ setErrorApi }) => {
   return (
     <>
   
-      <PersonLinkBack />
+  <PersonLinkBack />
 
       <div className={styles.wrapper}>
         <span className={styles.person__name}>{personName}</span>

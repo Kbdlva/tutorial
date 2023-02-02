@@ -1,16 +1,14 @@
-import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
 
 import { withErrorApi } from '@hoc-helpers/withErrorApi';
-import PeopleList from '@components/PeoplePage/PeopleList';
 import PeopleNavigation from '@components/PeoplePage/PeopleNavigation';
-import { getApiResource, changeHTTP } from '@utils/network';
-import { getPeopleId, getPeopleImage, getPeoplePageId } from '@services/getPeopleData';
-import { API_PEOPLE } from '@constants/api';
+import PeopleList from '@components/PeoplePage/PeopleList';
 import { useQueryParams } from '@hooks/useQueryParams';
 
-import styles from './PeoplePage.module.css';
-
+import { getApiResource, changeHTTP } from '@utils/network';
+import { getPeopleImage, getPeopleId, getPeoplePageId } from '@services/getPeopleData';
+import { API_PEOPLE } from '@constants/api';
 
 const PeoplePage = ({ setErrorApi }) => {
   const [people, setPeople] = useState(null);
@@ -20,8 +18,6 @@ const PeoplePage = ({ setErrorApi }) => {
 
   const query = useQueryParams();
   const queryPage = query.get('page');
-
-  // console.log( prevPage, nextPage);
 
   const getResponse = async (url) => {
     const res = await getApiResource(url);
@@ -34,24 +30,21 @@ const PeoplePage = ({ setErrorApi }) => {
         return {
           id,
           name,
-          img
+          img,
         }
       });
 
       setPeople(peopleList);
-      setPrevPage(changeHTTP(res.previous))
-      setNextPage(changeHTTP(res.next))
-      setCounterPage(getPeoplePageId(url))
-      setErrorApi(false);
+      setNextPage(changeHTTP(res.next));
+      setPrevPage(changeHTTP(res.previous));
+      setCounterPage(getPeoplePageId(url));
     }
-    else {
-      setErrorApi(true);
-    }
+
+    setErrorApi(!res);
   };
 
   useEffect(() => {
     getResponse(API_PEOPLE + queryPage);
-
   }, []);
 
   return (
@@ -67,10 +60,8 @@ const PeoplePage = ({ setErrorApi }) => {
   )
 }
 
-
 PeoplePage.propTypes = {
-    setErrorApi: PropTypes.func
-  }
+  setErrorApi: PropTypes.func,
+}
 
-
-export default withErrorApi(PeoplePage); 
+export default withErrorApi(PeoplePage);
