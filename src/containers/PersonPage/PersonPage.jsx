@@ -7,6 +7,7 @@ import { API_PERSON } from '@constants/api';
 import { getApiResource } from '@utils/network';
 import { getPeopleImage } from '@services/getPeopleData';
 import PersonPhoto from '@components/PersonPage/PersonPhoto';
+import { useSelector } from 'react-redux';
 import PersonInfo from '@components/PersonPage/PersonInfo';
 import PersonLinkBack from '@components/PersonPage/PersonLinkBack';
 import UiLoading from '@ui/UiLoading';
@@ -26,6 +27,10 @@ const PersonPage = ({ setErrorApi }) => {
   const [personName, setPersonName] = useState(null);
   const [personPhoto, setPersonPhoto] = useState(null);
   const [personFilms, setPersonFilms] = useState(null);
+  const [personFavorite, setPersonFavorite] = useState(null);
+
+
+  const storeDate = useSelector(state => state.favoriteReducer);
 
 
 
@@ -34,8 +39,11 @@ const PersonPage = ({ setErrorApi }) => {
   useEffect(() => {
     (async () => {
       setPersonId(id);
+      storeDate[id] ? setPersonFavorite(true) : setPersonFavorite(false);
+
 
       const res = await getApiResource(`${API_PERSON}/${id}/`);
+
 
       if (res) {
         setPersonInfo([
@@ -64,22 +72,25 @@ const PersonPage = ({ setErrorApi }) => {
 
   return (
     <>
-  
-  <PersonLinkBack />
+
+      <PersonLinkBack />
 
       <div className={styles.wrapper}>
         <span className={styles.person__name}>{personName}</span>
         <div className={styles.container}>
 
           <PersonPhoto
+            personId={personId}
             personPhoto={personPhoto}
             personName={personName}
+            personFavorite={personFavorite}
+            setPersonFavorite={setPersonFavorite}
           />
 
           {personInfo && <PersonInfo personInfo={personInfo} />}
 
           {personFilms && (
-            <Suspense fallback={<UiLoading/>}>
+            <Suspense fallback={<UiLoading />}>
               <PersonFilms personFilms={personFilms} />
             </Suspense>
           )}

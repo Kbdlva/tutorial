@@ -7,7 +7,6 @@ const PersonLinkBack = () => {
     const navigate = useNavigate();
     const handleGoBack = e => {
         e.preventDefault();
-        console.log('handleGoBack');
         navigate(-1);
     }
     return (

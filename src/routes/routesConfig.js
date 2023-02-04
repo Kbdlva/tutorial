@@ -9,27 +9,27 @@ import FavoritePage from "@containers/FavoritePage";
 const routesConfig = [
     {
         path: '/',
-        element: <HomePage/>
+        element: <HomePage />
     },
     {
         path: '/people',
-        element: <PeoplePage/>
+        element: <PeoplePage />
     },
     {
         path: '/people/:id',
-        element: <PersonPage/>
+        element: <PersonPage />
     },
     {
-        path: '/favs',
-        element: <PersonPage/>
+        path: '/favorites',
+        element: <FavoritePage />
     },
     {
         path: '/not-found',
-        element: <NotFoundPage/>
+        element: <NotFoundPage />
     },
     {
         path: '*',
-        element: <NotFoundPage/>
+        element: <NotFoundPage />
     }
 
 

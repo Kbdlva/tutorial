@@ -1,11 +1,11 @@
 .wrapper {
     max-width: var(--width-max);
     margin: 0 ;
-    padding: var(--spacing-large) var(--spacing-large) ;
+    padding:5rem 20rem;
 }
 
 @media screen and (max-width: 1400px) {
     .wrapper {
-        padding: var(--spacing-large) var(--spacing-large) ;
+        padding: 5rem 5rem;
     }
 }

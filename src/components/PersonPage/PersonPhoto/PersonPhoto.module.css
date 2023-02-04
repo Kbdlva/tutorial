@@ -1,6 +1,11 @@
 .container {
     width: 250px;
     height: 350px;
+    position:relative;
+    top: 0;
+    left: 0;
+
+
 }
 
 .photo {
@@ -9,4 +14,16 @@
     border-radius: var(--border-radius-medium);
     object-fit: cover;
     object-position: center center;
+}
+
+.favorite {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    top: -15px;
+    right: -17px;
+    object-fit: cover;
+    object-position: center center;
+    cursor: pointer;
+    filter: drop-shadow(0 0 2px #000);
 }

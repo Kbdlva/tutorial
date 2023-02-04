@@ -14,7 +14,7 @@ module.exports = function override(config) {
         '@utils': 'src/utils',
         '@store': 'src/store',
         '@services': 'src/services',
-        // '@context': 'src/context',
+        '@context': 'src/context',
     })(config);
 
     return config;
