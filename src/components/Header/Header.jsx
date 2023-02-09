@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTheme, THEME_DARK, THEME_LIGHT, THEME_NEUTRAL } from '@context/ThemeProvider';
 import Favorite from '@components/Favorite';
+import SearchPage from '@containers/SearchPage';
 
 import imgDroid from './img/droid.svg';
 import imgLightsaber from './img/lightsaber.svg';
@@ -30,6 +31,8 @@ const Header = () => {
       <ul className={styles.list__container}>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/people/?page=1">People</NavLink></li>
+        <li><NavLink to="/search">Search</NavLink></li>
+        <li><NavLink to="/fail">Fail</NavLink></li>
         <li><NavLink to="/not-found">Not Found</NavLink></li>
       </ul>
       <Favorite />
