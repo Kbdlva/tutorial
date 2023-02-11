@@ -4,8 +4,8 @@ import rootReducer from './reducers';
 import thunk from 'redux-thunk';
 import { setLocalStorage } from '@utils/localStorage';
 
-const store = createStore(rootReducer,
-    composeWithDevTools(applyMiddleware(thunk))
+const store = createStore(rootReducer
+    // ,composeWithDevTools(applyMiddleware(thunk))
 );
 
 store.subscribe(() => {

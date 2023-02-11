@@ -19,8 +19,6 @@ import styles from './PersonPage.module.css';
 const PersonFilms = React.lazy(() => import('@components/PersonPage/PersonFilms'));
 
 
-
-
 const PersonPage = ({ setErrorApi }) => {
   const [personId, setPersonId] = useState(null);
   const [personInfo, setPersonInfo] = useState(null);
@@ -31,7 +29,6 @@ const PersonPage = ({ setErrorApi }) => {
 
 
   const storeDate = useSelector(state => state.favoriteReducer);
-
 
 
   const { id } = useParams();

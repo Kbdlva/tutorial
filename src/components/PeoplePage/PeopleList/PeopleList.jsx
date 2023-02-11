@@ -16,7 +16,7 @@ const PeopleList = ({ people }) => {
                         <p>{name}</p>
                     </Link>
 
-                </li> // key is omething like id for each element
+                </li> // key is something like id for each element
             )}
         </ul>
     )

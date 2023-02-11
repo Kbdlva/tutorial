@@ -10,7 +10,7 @@ export const withErrorApi = View => {
             <>
                 {
                     errorApi
-                        ?<ErrorMessage/>
+                        ? <ErrorMessage />
                         : (
                             <View
                                 setErrorApi={setErrorApi}

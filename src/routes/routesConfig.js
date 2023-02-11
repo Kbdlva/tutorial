@@ -7,7 +7,6 @@ import SearchPage from "@containers/SearchPage";
 import ErrorMessage from '@components/ErrorMessage';
 
 
-
 const routesConfig = [
     {
         path: '/',
@@ -41,8 +40,6 @@ const routesConfig = [
         path: '*',
         element: <NotFoundPage />
     }
-
-
 ];
 
 export default routesConfig;

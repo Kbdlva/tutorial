@@ -17,7 +17,6 @@ const initialState = getLocalStorage('store');
 //     },
 //   }
   
-
 const favoriteReducer = (state = initialState , action) => {
     switch (action.type) {
         case ADD_PERSON_TO_FAVORITE:

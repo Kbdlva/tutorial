@@ -4,11 +4,13 @@ import { useState, useEffect } from 'react';
 import { withErrorApi } from '@hoc-helpers/withErrorApi';
 import PeopleNavigation from '@components/PeoplePage/PeopleNavigation';
 import PeopleList from '@components/PeoplePage/PeopleList';
+
 import { useQueryParams } from '@hooks/useQueryParams';
 
 import { getApiResource, changeHTTP } from '@utils/network';
 import { getPeopleImage, getPeopleId, getPeoplePageId } from '@services/getPeopleData';
 import { API_PEOPLE } from '@constants/api';
+import { result } from 'lodash';
 
 const PeoplePage = ({ setErrorApi }) => {
   const [people, setPeople] = useState(null);

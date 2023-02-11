@@ -2,7 +2,8 @@ import { HTTP, HTTPS, SWAPI_ROOT, SWAPI_PEOPLE, URL_IMG_PERSON, GUIDE_IMG_EXTENT
 
 export const getPeoplePageId = url => {
     const pos = url.lastIndexOf(SWAPI_PARAM_PAGE);
-    const id = url.slice(pos + SWAPI_PARAM_PAGE.length);
+    const id = url.slice(pos + SWAPI_PARAM_PAGE.length); // url length + pos = 36, the last thing in url is number(id) so slice skips 35 characters and takes the last one only
+    console.log(pos)
     
     return Number(id);
 }
